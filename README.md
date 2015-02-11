@@ -73,7 +73,7 @@ func xmlExample() {
 		logs.Debug(string(x))
 	}
 
-	strJson := `<Goods>
+	strXml := `<Goods>
 				<Amount>000000000000456</Amount>
 				<CreateDate>2015-02-11</CreateDate>
 				<DateTime>2015-02-11 11:12:13</DateTime>
@@ -81,7 +81,7 @@ func xmlExample() {
 				</Goods>`
 
 	goods2 := Goods{}
-	if e := xml.Unmarshal([]byte(strJson), &goods2); e != nil {
+	if e := xml.Unmarshal([]byte(strXml), &goods2); e != nil {
 		logs.Error(e)
 	} else {
 		logs.Pretty("", goods2)

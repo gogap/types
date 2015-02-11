@@ -13,12 +13,12 @@ const (
 
 type Amount int64
 
-func (i Amount) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	e.EncodeElement(fmt.Sprintf(TYPES_AMOUNT_MARSHAL_FORMAT, i), start)
+func (p Amount) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	e.EncodeElement(fmt.Sprintf(TYPES_AMOUNT_MARSHAL_FORMAT, p), start)
 	return nil
 }
 
-func (i *Amount) UnmarshalXML(d *xml.Decoder, start xml.StartElement) (err error) {
+func (p *Amount) UnmarshalXML(d *xml.Decoder, start xml.StartElement) (err error) {
 	var content string
 	if e := d.DecodeElement(&content, &start); e != nil {
 		return fmt.Errorf("get the type Amount field of %s error", start.Name.Local)
@@ -31,7 +31,7 @@ func (i *Amount) UnmarshalXML(d *xml.Decoder, start xml.StartElement) (err error
 	if v, e := strconv.Atoi(content); e != nil {
 		return fmt.Errorf("the type Amount field of %s is not a number, value is: %s", start.Name.Local, content)
 	} else {
-		*i = Amount(v)
+		*p = Amount(v)
 	}
 	return nil
 }
