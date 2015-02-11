@@ -2,62 +2,89 @@
 
 extend the golang types for json/xml Marshal and Unmarshal
 
+- Amount:	000000001000001
+- Date: 	2015-01-02
+- Time: 	13:14:55
+- DateTime: 2015-01-02 13:14:55
 
-### Amount
+### Example
 ```go
 package main
 
 import (
 	"encoding/json"
 	"encoding/xml"
-	"fmt"
+	"time"
 
+	"github.com/gogap/logs"
 	"github.com/gogap/types"
 )
 
 type Goods struct {
-	Amount types.Amount
+	Amount     types.Amount
+	CreateDate types.Date
+	DateTime   types.DateTime
+	Time       types.Time
 }
 
 func main() {
-	fmt.Println("Amount(json)")
-	jsonAmount()
-	fmt.Println("Amount(xml)")
-	xmlAmount()
+	jsonExample()
+	xmlExample()
+
+	time.Sleep(time.Second)
 }
 
-func jsonAmount() {
-	goods := Goods{Amount: 123}
+func jsonExample() {
+	goods := Goods{
+		Amount:     123,
+		CreateDate: types.Date(time.Now()),
+		DateTime:   types.DateTime(time.Now()),
+		Time:       types.Time(time.Now())}
+
 	if x, e := json.MarshalIndent(goods, "", " "); e != nil {
-		fmt.Println(e)
+		logs.Error(e)
 	} else {
-		fmt.Println(string(x))
+		logs.Debug(string(x))
 	}
 
-	strJson := `{"Amount":"000000000000456"}`
+	strJson := `{"Amount":"000000000000456", 
+				"CreateDate":"2015-02-11",
+				"DateTime":"2015-02-11 11:12:13",
+				"Time":"21:12:13"}`
+
 	goods2 := Goods{}
 	if e := json.Unmarshal([]byte(strJson), &goods2); e != nil {
-		fmt.Println(goods2, e)
+		logs.Error(e)
 	} else {
-		fmt.Println(goods2)
+		logs.Pretty("", goods2)
 	}
 }
 
-func xmlAmount() {
-	goods := Goods{Amount: 123}
+func xmlExample() {
+	goods := Goods{
+		Amount:     123,
+		CreateDate: types.Date(time.Now()),
+		DateTime:   types.DateTime(time.Now()),
+		Time:       types.Time(time.Now())}
+
 	if x, e := xml.MarshalIndent(goods, "", " "); e != nil {
-		fmt.Println(e)
+		logs.Error(e)
 	} else {
-		fmt.Println(string(x))
+		logs.Debug(string(x))
 	}
 
-	strJson := `<Goods><Amount>000000000000456</Amount></Goods>`
+	strJson := `<Goods>
+				<Amount>000000000000456</Amount>
+				<CreateDate>2015-02-11</CreateDate>
+				<DateTime>2015-02-11 11:12:13</DateTime>
+				<Time>20:12:13</Time>
+				</Goods>`
+
 	goods2 := Goods{}
 	if e := xml.Unmarshal([]byte(strJson), &goods2); e != nil {
-		fmt.Println(goods2, e)
+		logs.Error(e)
 	} else {
-		fmt.Println(goods2)
+		logs.Pretty("", goods2)
 	}
 }
-
 ```
