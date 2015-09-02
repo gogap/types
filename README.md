@@ -2,10 +2,11 @@
 
 extend the golang types for json/xml Marshal and Unmarshal
 
-- Amount:	000000001000001
-- Date: 	2015-01-02
-- Time: 	13:14:55
-- DateTime: 2015-01-02 13:14:55
+- Amount:		"000000001000001"	(marshal)<->(unmarshal) 1000001
+- DoubleAmount:	"123.45"			(marshal)<->(unmarshal) 12345
+- Date: 		2015-01-02
+- Time: 		13:14:55
+- DateTime: 	2015-01-02 13:14:55
 
 ### Example
 ```go
